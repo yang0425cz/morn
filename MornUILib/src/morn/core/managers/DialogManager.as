@@ -6,7 +6,6 @@ package morn.core.managers {
 	import flash.display.Bitmap;
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import flash.events.MouseEvent;
 	
 	import morn.core.components.Box;
 	import morn.core.components.Dialog;
@@ -36,7 +35,10 @@ package morn.core.managers {
 		
 		private function dialogActivate(e:UIEvent):void {
 			if (e.data is Dialog) {
-				_box.swapChildrenAt(_box.getChildIndex(e.data), _box.numChildren - 1);
+				try {
+					var index:int = _box.getChildIndex(e.data);
+					_box.swapChildrenAt(index, _box.numChildren - 1);
+				}  catch(error:Error)  { }
 			}
 		}
 		
