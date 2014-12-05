@@ -6,6 +6,8 @@ package morn.core.components {
 	import flash.display.DisplayObject;
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
+	
+	import morn.core.events.UIEvent;
 	import morn.core.handlers.Handler;
 	import morn.core.utils.StringUtils;
 	
@@ -32,6 +34,12 @@ package morn.core.components {
 				removeElement(dragTarget);
 			}
 			addEventListener(MouseEvent.CLICK, onClick);
+			addEventListener(MouseEvent.MOUSE_DOWN, onMouseDownActivate);
+		}
+		
+		/** 激活窗口 */
+		protected function onMouseDownActivate(e:MouseEvent):void {
+			App.stage.dispatchEvent(new UIEvent(UIEvent.DIALOG_ACTIVATE, this));
 		}
 		
 		/**默认按钮处理*/

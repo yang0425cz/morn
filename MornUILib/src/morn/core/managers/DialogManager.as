@@ -6,8 +6,11 @@ package morn.core.managers {
 	import flash.display.Bitmap;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
+	
 	import morn.core.components.Box;
 	import morn.core.components.Dialog;
+	import morn.core.events.UIEvent;
 	import morn.core.utils.ObjectUtils;
 	
 	/**对话框管理器*/
@@ -27,7 +30,14 @@ package morn.core.managers {
 		private function onAddedToStage(e:Event):void {
 			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			stage.addEventListener(Event.RESIZE, onResize);
+			stage.addEventListener(UIEvent.DIALOG_ACTIVATE, dialogActivate);
 			onResize(null);
+		}
+		
+		private function dialogActivate(e:UIEvent):void {
+			if (e.data is Dialog) {
+				_box.swapChildrenAt(_box.getChildIndex(e.data), _box.numChildren - 1);
+			}
 		}
 		
 		private function onResize(e:Event):void {
@@ -58,7 +68,11 @@ package morn.core.managers {
 		/**显示对话框(非模式窗口) @param closeOther 是否关闭其他对话框*/
 		public function show(dialog:Dialog, closeOther:Boolean = false):void {
 			if (closeOther) {
-				_box.removeAllChild();
+				for (var i:int = _box.numChildren - 1; i > -1; i--) {
+					if (_box.getChildAt(i) is Dialog) {
+						Dialog(_box.getChildAt(i)).close();
+					}
+				}
 			}
 			if (dialog.popupCenter) {
 				dialog.x = (stage.stageWidth - dialog.width) * 0.5;
@@ -70,7 +84,11 @@ package morn.core.managers {
 		/**显示对话框(模式窗口) @param closeOther 是否关闭其他对话框*/
 		public function popup(dialog:Dialog, closeOther:Boolean = false):void {
 			if (closeOther) {
-				_mask.removeAllChild(_maskBg);
+				for (var i:int = _mask.numChildren - 1; i > -1; i--) {
+					if (_mask.getChildAt(i) is Dialog) {
+						Dialog(_mask.getChildAt(i)).close();
+					}
+				}
 			}
 			if (dialog.popupCenter) {
 				dialog.x = (stage.stageWidth - dialog.width) * 0.5;

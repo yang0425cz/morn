@@ -25,6 +25,9 @@ package morn.core.events {
 		//-----------------FrameClip-----------------
 		/**帧跳动*/
 		public static const FRAME_CHANGED:String = "frameChanged";
+		//-----------------Dialog-----------------
+		/**窗口激活*/
+		public static const DIALOG_ACTIVATE:String = "dialogActivate";
 		//-----------------List-----------------
 		/**项渲染*/
 		public static const ITEM_RENDER:String = "listRender";
