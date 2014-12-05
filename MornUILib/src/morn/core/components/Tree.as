@@ -241,8 +241,7 @@ package morn.core.components {
 		public function set xml(value:XML):void {
 			_xml = value;
 			var arr:Array = [];
-			parseXml(xml, arr, null, true);
-			
+			if (value != null) parseXml(xml, arr, null, true);
 			array = arr;
 		}
 		

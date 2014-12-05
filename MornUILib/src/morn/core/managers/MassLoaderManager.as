@@ -79,7 +79,7 @@ package morn.core.managers {
 		private function doLoad(resInfo:ResInfo):void {
 			_loaderCount++;
 			var resLoader:ResLoader = _resLoaders.length > 0 ? _resLoaders.pop() : new ResLoader();
-			resLoader.load(resInfo.url, resInfo.type, new Handler(loadComplete, [resLoader, resInfo]), new Handler(loadProgress, [resInfo]));
+			resLoader.load(resInfo.url, resInfo.type, new Handler(loadComplete, [resLoader, resInfo]), new Handler(loadProgress, [resInfo]), resInfo.isCacheContent);
 		}
 		
 		private function loadProgress(resInfo:ResInfo, progress:Number):void {
