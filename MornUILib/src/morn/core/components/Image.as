@@ -4,6 +4,7 @@
  */
 package morn.core.components {
 	import flash.display.BitmapData;
+	
 	import morn.core.events.UIEvent;
 	import morn.core.handlers.Handler;
 	import morn.core.utils.StringUtils;
@@ -15,11 +16,12 @@ package morn.core.components {
 	public class Image extends Component {
 		protected var _bitmap:AutoBitmap;
 		protected var _url:String;
+		protected var _completeHander:Handler = null;
 		
 		public function Image(url:String = null) {
 			this.url = url;
 		}
-		
+
 		override protected function createChildren():void {
 			addChild(_bitmap = new AutoBitmap());
 		}
@@ -36,6 +38,7 @@ package morn.core.components {
 				if (Boolean(value)) {
 					if (App.asset.hasClass(_url)) {
 						bitmapData = App.asset.getBitmapData(_url);
+						if (_completeHander) _completeHander.execute();
 					} else {
 						App.mloader.loadBMD(_url, 1, new Handler(setBitmapData, [_url]));
 					}
@@ -52,6 +55,16 @@ package morn.core.components {
 		
 		public function set skin(value:String):void {
 			url = value;
+		}
+		
+		public function get completeHander():Handler
+		{
+			return _completeHander;
+		}
+		
+		public function set completeHander(value:Handler):void
+		{
+			_completeHander = value;
 		}
 		
 		/**源位图数据*/
@@ -71,6 +84,7 @@ package morn.core.components {
 		protected function setBitmapData(url:String, bmd:BitmapData):void {
 			if (url == _url) {
 				bitmapData = bmd;
+				if (_completeHander) _completeHander.execute();
 			}
 		}
 		
