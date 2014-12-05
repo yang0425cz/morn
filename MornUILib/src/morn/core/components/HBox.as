@@ -3,7 +3,7 @@
  * Feedback yungzhu@gmail.com http://weibo.com/newyung
  */
 package morn.core.components {
-	import morn.core.utils.StringUtils;
+	
 	
 	/**HBox容器*/
 	public class HBox extends LayoutBox {
@@ -12,7 +12,8 @@ package morn.core.components {
 		public static const MIDDLE:String = "middle";
 		public static const BOTTOM:String = "bottom";
 		
-		public function HBox() {
+		public function HBox(align:String=NONE) {
+			this.align = align;
 		}
 		
 		override protected function changeItems():void {

@@ -3,7 +3,6 @@
  * Feedback yungzhu@gmail.com http://weibo.com/newyung
  */
 package morn.core.components {
-	import morn.core.utils.StringUtils;
 	
 	/**VBox容器*/
 	public class VBox extends LayoutBox {
@@ -12,7 +11,8 @@ package morn.core.components {
 		public static const CENTER:String = "center";
 		public static const RIGHT:String = "right";
 		
-		public function VBox() {
+		public function VBox(align:String=NONE) {
+			this.align = align;
 		}
 		
 		override protected function changeItems():void {
